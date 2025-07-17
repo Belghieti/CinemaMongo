@@ -52,7 +52,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOrigins(List.of("http://localhost:3000","https://cinemamongo-production.up.railway.app" ));
+        cfg.setAllowedOrigins(List.of("http://localhost:3000","https://cinemamongo-production.up.railway.app" ,"https://cinema-front-mngo.vercel.app/" ));
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         cfg.setAllowedHeaders(List.of("*"));
         cfg.setAllowCredentials(true);
