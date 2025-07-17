@@ -54,7 +54,8 @@ public class SecurityConfig {
         CorsConfiguration cfg = new CorsConfiguration();
         cfg.setAllowedOrigins(List.of("https://cinemamongo-production.up.railway.app","http://localhost:3000","https://cinema-front-mngo.vercel.app",
                                      "https://cinema-front-mngo-git-main-simons-projects-8e8f969f.vercel.app",
-                                      "https://cinema-front-mngo-git-main-simons-projects-8e8f969f.vercel.app"
+                                      "https://cinema-front-mngo-git-main-simons-projects-8e8f969f.vercel.app",
+                                      "https://cinema-front-mngo-l5xrcgor8-simons-projects-8e8f969f.vercel.app/"
                                      ));
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         cfg.setAllowedHeaders(List.of("*"));
