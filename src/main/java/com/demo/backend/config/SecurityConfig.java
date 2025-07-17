@@ -57,7 +57,8 @@ public class SecurityConfig {
                                       "https://cinema-front-mngo-git-main-simons-projects-8e8f969f.vercel.app",
                                       "https://cinema-front-mngo-l5xrcgor8-simons-projects-8e8f969f.vercel.app/",
                                       "https://cinema-front-mngo-mkgttdz6b-simons-projects-8e8f969f.vercel.app/",
-                                      "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app/"
+                                      "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app/",
+                                      "https://cinema-front-mngo-vvodkfmj7-simons-projects-8e8f969f.vercel.app/"
                                      ));
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         cfg.setAllowedHeaders(List.of("*"));
