@@ -2,6 +2,7 @@ package com.demo.backend.controller;
 
 import com.demo.backend.model.User;
 import com.demo.backend.service.AuthService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
+
 public class AuthController {
 
     @Autowired
@@ -19,7 +22,9 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Map<String, String> body) {
-        return authService.register(body);
+
+        log.info("Registering user with body: {}", body);
+        return  authService.register(body);
     }
 
     @PostMapping("/login")
