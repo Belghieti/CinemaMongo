@@ -20,10 +20,21 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         config.setApplicationDestinationPrefixes("/app");
     }
 
-    @Override
+  /*  @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/wss").setAllowedOriginPatterns("https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app").withSockJS();
-    }
+    }*/
+@Override
+public void registerStompEndpoints(StompEndpointRegistry registry) {
+    // Endpoint SockJS (fallback)
+    registry.addEndpoint("/wss")
+            .setAllowedOriginPatterns("*") // ou spécifie les domaines si tu veux plus de sécurité
+            .withSockJS();
+
+    // Endpoint WebSocket natif
+    registry.addEndpoint("/wss")
+            .setAllowedOriginPatterns("*"); // support natif sans SockJS
+}
 
     /*@Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
