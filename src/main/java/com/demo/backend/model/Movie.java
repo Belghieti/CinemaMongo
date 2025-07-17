@@ -1,30 +1,23 @@
 package com.demo.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Entity
+@Document(collection = "movies")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String id;
     private String title;
     private String description;
     private String videoUrl;
-
-    @ManyToOne
-    private User addedBy; // 👈 le user qui a ajouté ce film
-
-    @OneToMany(mappedBy = "movie")
-    @JsonIgnore
-    private List<Box> boxes;
+    private String addedById; // id du user qui a ajouté ce film
+    private List<String> boxIds; // ids des box associées
 }

@@ -22,14 +22,14 @@ public class InvitationController {
     private final InvitationRepository invitationRepository;
 
     @PostMapping("/send")
-    public Invitation sendInvitation(@RequestParam Long senderId,
-                                     @RequestParam Long receiverId,
-                                     @RequestParam Long boxId) {
+    public Invitation sendInvitation(@RequestParam String senderId,
+                                     @RequestParam String receiverId,
+                                     @RequestParam String boxId) {
         return invitationService.sendInvitation(senderId, receiverId, boxId);
     }
 
     @PostMapping("/{id}/accept")
-    public Invitation acceptInvitation(@PathVariable Long id) {
+    public Invitation acceptInvitation(@PathVariable String id) {
         return invitationService.acceptInvitation(id);
     }
     @GetMapping("/received")
@@ -41,7 +41,7 @@ public class InvitationController {
             return ResponseEntity.status(401).body("Utilisateur non trouvé");
         }
 
-        List<Invitation> receivedInvitations = invitationRepository.findByReceiver(user);
+        List<Invitation> receivedInvitations = invitationRepository.findByReceiverId(user.getId());
 
         return ResponseEntity.ok(receivedInvitations);
     }

@@ -22,14 +22,12 @@ public class MovieController {
 
     @PostMapping
     public Movie addMovie(@RequestBody Movie movie, Authentication authentication) {
-        String username = authentication.getName(); // identifiant (souvent l'email ou le username)
+        String username = authentication.getName();
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-
-        movie.setAddedBy(user);
+        movie.setAddedById(user.getId());
         return movieService.addMovie(movie);
     }
-
 
     @GetMapping
     public List<Movie> getAllMovies() {
@@ -37,7 +35,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public Movie getMovie(@PathVariable Long id) {
+    public Movie getMovie(@PathVariable String id) {
         return movieService.getMovieById(id);
     }
 }

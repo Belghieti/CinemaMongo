@@ -17,30 +17,23 @@ public class InvitationService {
     private final UserRepository userRepository;
     private final BoxRepository boxRepository;
 
-    public Invitation sendInvitation(Long senderId, Long receiverId, Long boxId) {
-        User sender = userRepository.findById(senderId).orElseThrow();
-        User receiver = userRepository.findById(receiverId).orElseThrow();
-        Box box = boxRepository.findById(boxId).orElseThrow();
-
+    public Invitation sendInvitation(String senderId, String receiverId, String boxId) {
         Invitation invitation = new Invitation();
-        invitation.setSender(sender);
-        invitation.setReceiver(receiver);
-        invitation.setBox(box);
+        invitation.setSenderId(senderId);
+        invitation.setReceiverId(receiverId);
+        invitation.setBoxId(boxId);
         invitation.setStatus("pending");
         invitation.setAccepted(false);
-
         return invitationRepository.save(invitation);
     }
 
-    public Invitation acceptInvitation(Long invitationId) {
+    public Invitation acceptInvitation(String invitationId) {
         Invitation invitation = invitationRepository.findById(invitationId).orElseThrow();
-
         invitation.setAccepted(true);
         invitation.setStatus("accepted");
-
         // Ajouter le receiver à la liste des participants de la box
-        Box box = invitation.getBox();
-        box.getParticipants().add(invitation.getReceiver());
+        Box box = boxRepository.findById(invitation.getBoxId()).orElseThrow();
+        box.getParticipantIds().add(invitation.getReceiverId());
         boxRepository.save(box);
 
         return invitationRepository.save(invitation);
