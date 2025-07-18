@@ -55,6 +55,11 @@ public class SecurityConfig {
         cfg.setAllowedOrigins(List.of("https://cinemamongo-production.up.railway.app","http://localhost:3000","https://cinema-front-mngo.vercel.app",
 "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app"
                                      ));
+        cfg.addAllowedOriginPattern("https://*.vercel.app");
+        cfg.addAllowedOriginPattern("https://your-app-name.vercel.app");
+       cfg.addAllowedOriginPattern("http://localhost:3000");
+        cfg.addAllowedOriginPattern("https://localhost:3000");
+        
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         cfg.setAllowedHeaders(List.of("*"));
         cfg.setAllowCredentials(true);
