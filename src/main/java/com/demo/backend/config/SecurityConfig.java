@@ -56,7 +56,7 @@ public class SecurityConfig {
 "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app"
                                      ));
         cfg.addAllowedOriginPattern("https://*.vercel.app");
-        cfg.addAllowedOriginPattern("https://your-app-name.vercel.app");
+        cfg.addAllowedOriginPattern("https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app");
        cfg.addAllowedOriginPattern("http://localhost:3000");
         cfg.addAllowedOriginPattern("https://localhost:3000");
         
