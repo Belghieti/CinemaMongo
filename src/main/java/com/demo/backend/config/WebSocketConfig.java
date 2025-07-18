@@ -19,7 +19,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
        
         // Also register without SockJS for direct WebSocket connections
         registry.addEndpoint("/websocket")
-                .setAllowedOriginPatterns("*");
+                .setAllowedOriginPatterns("*").withSockJS();
     }
 
   /*  @Override
