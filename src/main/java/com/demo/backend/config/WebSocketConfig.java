@@ -22,9 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 public void registerStompEndpoints(StompEndpointRegistry registry) {
     registry.addEndpoint("/ws")
         .setAllowedOriginPatterns(
-            "https://cinema-front-mngo.vercel.app",
-            "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app",
-            "http://localhost:3000"
+           "*"
         )
         .withSockJS();
 }
