@@ -52,9 +52,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOrigins(List.of("https://cinemamongo-production.up.railway.app","http://localhost:3000","https://cinema-front-mngo.vercel.app",
-"https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app","https://localhost:3000","https://*.vercel.app",
-                                      "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app"
+        cfg.setAllowedOrigins(List.of("https://cinemamongo-production.up.railway.app","http://localhost:3000","https://cinema-front-mngo.vercel.app"
+
                                      ));
         
 
