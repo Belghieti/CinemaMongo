@@ -17,7 +17,7 @@ public class WebSocketController {
             @DestinationVariable String boxId,
             VideoSyncMessage message
     ) {
-        System.out.println("🔁 Sync video in box " + boxId + ": " + message.getAction());
+        System.out.println("🔁 Sync video in box " + boxId + ": " + message.getAction() + " @ " + message.getTime());
         return message;
     }
 
