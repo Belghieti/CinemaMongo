@@ -25,7 +25,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 "https://cinema-front-mngo.vercel.app",
                 "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app",
                 "http://localhost:3000"
-            ); // Correction : ajout du point-virgule
+            ).withSockJS();
+             // Correction : ajout du point-virgule
     }
 
     @Override
