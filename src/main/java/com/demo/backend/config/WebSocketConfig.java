@@ -20,10 +20,16 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         config.setApplicationDestinationPrefixes("/app");
     }
 
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("wss://cinemamongo-production.up.railway.app/ws").setAllowedOriginPatterns("https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app");
-    }
+  @Override
+public void registerStompEndpoints(StompEndpointRegistry registry) {
+    registry.addEndpoint("/ws")
+        .setAllowedOriginPatterns(
+            "https://cinema-front-mngo.vercel.app",
+            "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app",
+            "http://localhost:3000"
+        )
+        
+}
 
     /*@Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
