@@ -14,7 +14,7 @@ public class WebSocketController {
     @MessageMapping("/box/{boxId}/video-sync")
     @SendTo("/topic/box/{boxId}/video-sync")
     public VideoSyncMessage syncVideo(
-            @DestinationVariable Long boxId,
+            @DestinationVariable String boxId,
             VideoSyncMessage message
     ) {
         System.out.println("🔁 Sync video in box " + boxId + ": " + message.getAction());
@@ -24,7 +24,7 @@ public class WebSocketController {
     @MessageMapping("/box/{boxId}/chat")
     @SendTo("/topic/box/{boxId}/chat")
     public ChatMessage handleChat(
-            @DestinationVariable Long boxId,
+            @DestinationVariable String boxId,
             ChatMessage message
     ) {
         System.out.println("💬 Message dans box " + boxId + " de " + message.getSender() + ": " + message.getContent());
@@ -34,7 +34,7 @@ public class WebSocketController {
     @MessageMapping("/box/{boxId}/invite")
     @SendTo("/topic/box/{boxId}/invitations")
     public InvitationMessage handleInvitation(
-            @DestinationVariable Long boxId,
+            @DestinationVariable String boxId,
             InvitationMessage message
     ) {
         System.out.println("📨 Nouvelle invitation dans box " + boxId + " pour " + message.getInvitedUsername());
