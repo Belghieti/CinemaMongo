@@ -1,15 +1,17 @@
 package com.demo.backend.controller;
 
 import com.demo.backend.model.Box;
+import com.demo.backend.model.Movie;
 import com.demo.backend.model.User;
 import com.demo.backend.repository.BoxRepository;
+import com.demo.backend.repository.MovieRepository;
 import com.demo.backend.repository.UserRepository;
 import com.demo.backend.service.BoxService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.Authentication;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -22,8 +24,7 @@ public class BoxController {
     private final BoxService boxService;
     private final BoxRepository boxRepository;
     private final UserRepository userRepository;
-
-
+    private final MovieRepository movieRepository;
 
     @PostMapping("/create")
     public Box createBox(@RequestParam String movieId,
@@ -47,9 +48,20 @@ public class BoxController {
             return ResponseEntity.status(404).body("Box non trouvée");
         }
         Box box = optionalBox.get();
-
-        return ResponseEntity.ok(box);
+        // Ajout du film associé
+        Movie movie = null;
+        if (box.getMovieId() != null) {
+            Optional<Movie> optionalMovie = movieRepository.findById(box.getMovieId());
+            if (optionalMovie.isPresent()) {
+                movie = optionalMovie.get();
+            }
+        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("box", box);
+        response.put("movie", movie); // movie peut être null si non trouvé
+        return ResponseEntity.ok(response);
     }
+
     @GetMapping("/{boxId}/join")
     public ResponseEntity<Map<String, Object>> joinBox(@RequestParam String userId, @PathVariable String boxId) {
         Box box = boxRepository.findById(boxId).orElseThrow();
