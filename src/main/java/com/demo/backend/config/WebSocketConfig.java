@@ -22,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("wss://cinemamongo-production.up.railway.app/ws").setAllowedOriginPatterns("*");
+        registry.addEndpoint("wss://cinemamongo-production.up.railway.app/ws").setAllowedOriginPatterns("https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app");
     }
 
     /*@Override
