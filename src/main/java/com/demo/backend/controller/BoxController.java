@@ -58,7 +58,7 @@ public class BoxController {
         }
         Map<String, Object> response = new HashMap<>();
         response.put("box", box);
-        response.put("movie", movie); // movie peut être null si non trouvé
+        response.put("movie", movie);
         return ResponseEntity.ok(response);
     }
 
