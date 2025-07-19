@@ -3,7 +3,6 @@ package com.demo.backend.config;
 import com.demo.backend.repository.UserRepository;
 import com.demo.backend.security.StompPrincipal;
 import com.demo.backend.service.JwtService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -26,11 +25,15 @@ public class JwtChannelInterceptor implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        StompHeaderAccessor accessor =
-                MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+        StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
         if (accessor != null && accessor.getCommand() != null) {
+            System.out.println("Headers STOMP: " + accessor.toNativeHeaderMap());
+
             List<String> authHeaders = accessor.getNativeHeader("Authorization");
+            if ((authHeaders == null || authHeaders.isEmpty()) && accessor.getNativeHeader("authorization") != null) {
+                authHeaders = accessor.getNativeHeader("authorization");
+            }
 
             if (authHeaders != null && !authHeaders.isEmpty()) {
                 String token = authHeaders.get(0).replace("Bearer ", "");
@@ -48,11 +51,10 @@ public class JwtChannelInterceptor implements ChannelInterceptor {
                     System.out.println("Token JWT invalide ou expiré");
                 }
             } else {
-                // Correction : ne pas rejeter la connexion si le header Authorization est absent
                 System.out.println("Aucun header Authorization trouvé dans la connexion WebSocket");
-                // On laisse passer le message sans authentification
             }
         }
+
         return message;
     }
 }
