@@ -1,5 +1,4 @@
-/*package com.demo.backend.config;
-
+package com.demo.backend.config;
 
 import com.demo.backend.repository.UserRepository;
 import com.demo.backend.security.StompPrincipal;
@@ -13,6 +12,7 @@ import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
 @Component
 public class JwtChannelInterceptor implements ChannelInterceptor {
 
@@ -44,13 +44,15 @@ public class JwtChannelInterceptor implements ChannelInterceptor {
                     } else {
                         System.out.println("Aucun utilisateur trouvé avec l'email : " + email);
                     }
-
+                } else {
+                    System.out.println("Token JWT invalide ou expiré");
                 }
+            } else {
+                // Correction : ne pas rejeter la connexion si le header Authorization est absent
+                System.out.println("Aucun header Authorization trouvé dans la connexion WebSocket");
+                // On laisse passer le message sans authentification
             }
         }
-
         return message;
     }
 }
-
- */

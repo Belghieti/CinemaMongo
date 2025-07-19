@@ -1,4 +1,4 @@
-/*package com.demo.backend.security;
+package com.demo.backend.security;
 
 import java.security.Principal;
 
@@ -14,4 +14,3 @@ public class StompPrincipal implements Principal {
         return name;
     }
 }
-*/
