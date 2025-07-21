@@ -21,23 +21,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // Pour WebSocket standard (wss://...)
         registry.addEndpoint("/ws")
-                .setAllowedOriginPatterns(
-                        "https://cinema-front-mngo.vercel.app",
-                        "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app",
-                        "http://localhost:3000"
-                );
+                .setAllowedOrigins("*"); // ← autorise tout le monde pour test
 
-        // Pour SockJS fallback
         registry.addEndpoint("/ws-sockjs")
-                .setAllowedOriginPatterns(
-                        "https://cinema-front-mngo.vercel.app",
-                        "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app",
-                        "http://localhost:3000"
-                )
+                .setAllowedOrigins("*")
                 .withSockJS();
     }
+
 
 
     @Override
