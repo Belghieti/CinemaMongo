@@ -32,9 +32,9 @@ public class SecurityConfig {
                 .sessionManagement(sm ->
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/auth/login","/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/ws", "/ws/**", "/ws-sockjs", "/ws-sockjs/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login","/auth/register","https://websocketking.com/").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**","https://websocketking.com/").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/ws", "/ws/**", "/ws-sockjs", "/ws-sockjs/**","https://websocketking.com/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter,
@@ -53,7 +53,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
         cfg.setAllowedOrigins(List.of("https://cinemamongo-production.up.railway.app","http://localhost:3000","https://cinema-front-mngo.vercel.app",
-                                      "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app"
+                "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app","https://websocketking.com/"
 
                                      ));
         
