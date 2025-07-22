@@ -66,7 +66,11 @@ public class JwtChannelInterceptor implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        System.out.println("JwtChannelInterceptor.preSend called");
+        // On ignore la vérification du token JWT pour les connexions WebSocket
+        // et on accepte les connexions sans authentification.
+        // Cette approche est utilisée pour permettre aux clients de se connecter
+        // sans avoir à fournir un token JWT, ce qui est utile pour les tests ou
+        // les environnements de développement où l'authentification n'est pas nécessaire.
 
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
