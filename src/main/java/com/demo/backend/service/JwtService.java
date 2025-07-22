@@ -3,8 +3,10 @@ package com.demo.backend.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
 
 @Service
@@ -36,5 +38,19 @@ public class JwtService {
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public UserDetails loadUserByToken(String token) {
+        String username = extractUsername(token);
+        if (username == null) {
+            throw new IllegalArgumentException("Token JWT invalide");
+        }
+        // Ici, tu peux charger l'utilisateur depuis la base de données si nécessaire
+        // Par exemple, en utilisant un UserRepository
+        return org.springframework.security.core.userdetails.User
+                .withUsername(username)
+                .password("") // Tu peux mettre un mot de passe vide ou le charger depuis la base de données
+                .authorities(Collections.emptyList()) // Tu peux ajouter les rôles de l'utilisateur ici
+                .build();
     }
 }
