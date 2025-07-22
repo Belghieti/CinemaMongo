@@ -24,9 +24,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/ws")
                 .setAllowedOrigins("*","https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app"); // ← autorise tout le monde pour test
 
-        registry.addEndpoint("/ws-sockjs")
-                .setAllowedOrigins("*", "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app")
-                .withSockJS();
+     //   registry.addEndpoint("/ws-sockjs")
+                //      .setAllowedOrigins("*", "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app")
+                // .withSockJS();
     }
 
 
