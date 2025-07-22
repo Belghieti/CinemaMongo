@@ -22,10 +22,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("*"); // ← autorise tout le monde pour test
+                .setAllowedOrigins("*","https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app"); // ← autorise tout le monde pour test
 
         registry.addEndpoint("/ws-sockjs")
-                .setAllowedOrigins("*")
+                .setAllowedOrigins("*", "https://cinema-front-mngo-simons-projects-8e8f969f.vercel.app")
                 .withSockJS();
     }
 
