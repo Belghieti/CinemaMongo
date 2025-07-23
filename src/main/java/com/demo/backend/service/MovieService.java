@@ -20,6 +20,9 @@ public class MovieService {
     public List<Movie> getAllMovies() {
         return movieRepository.findAll();
     }
+    public List<Movie> getAllMoviesByAddedById(String userId) {
+        return movieRepository.findAllByAddedById(userId);
+    }
 
     public Movie getMovieById(String id) {
         return movieRepository.findById(id).orElse(null);

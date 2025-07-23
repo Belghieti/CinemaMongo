@@ -33,6 +33,10 @@ public class MovieController {
     public List<Movie> getAllMovies() {
         return movieService.getAllMovies();
     }
+    @GetMapping("/user")
+    public List<Movie> getMoviesByUser(@AuthenticationPrincipal User user) {
+        return movieService.getAllMoviesByAddedById(user.getId());
+    }
 
     @GetMapping("/{id}")
     public Movie getMovie(@PathVariable String id) {
