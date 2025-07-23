@@ -34,7 +34,10 @@ public class MovieController {
         return movieService.getAllMovies();
     }
     @GetMapping("/user")
-    public List<Movie> getMoviesByUser(@AuthenticationPrincipal User user) {
+    public List<Movie> getMoviesByUser(Authentication  userAuthentication) {
+        String username = userAuthentication.getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
         return movieService.getAllMoviesByAddedById(user.getId());
     }
 
