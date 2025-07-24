@@ -3,6 +3,7 @@ package com.demo.backend.config;
 import com.demo.backend.model.User;
 import com.demo.backend.repository.UserRepository;
 import com.demo.backend.service.JwtService;
+import com.demo.backend.service.TokenBlacklist;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +26,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private JwtService jwtService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TokenBlacklist tokenBlacklist;
+
 
     public JwtAuthFilter(JwtService jwtService, UserRepository userRepository) {
         this.jwtService = jwtService;
@@ -44,6 +48,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.substring(7);
+        // 🚫 Si token blacklisté → refuse l'accès
+        if (tokenBlacklist.isBlacklisted(token)) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
         String username = jwtService.extractUsername(token);
 
         // Si pas encore authentifié et token valide

@@ -3,6 +3,8 @@ package com.demo.backend.controller;
 import com.demo.backend.DTOs.UserDTO;
 import com.demo.backend.model.User;
 import com.demo.backend.service.AuthService;
+import com.demo.backend.service.JwtService;
+import com.demo.backend.service.TokenBlacklist;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,10 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+    @Autowired
+    private TokenBlacklist tokenBlacklist;
+    @Autowired
+    private JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Map<String, String> body , HttpServletRequest request) {
@@ -54,5 +60,22 @@ public class AuthController {
         return ResponseEntity.ok(users);
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.badRequest().body("Token manquant");
+        }
+
+        String token = authHeader.substring(7);
+
+        // Extraire la date d'expiration du token (en ms)
+        long expirationTimestamp = jwtService.extractExpiration(token).getTime();
+
+        // Ajouter à la blacklist avec la date d'expiration
+        tokenBlacklist.add(token, expirationTimestamp);
+
+        return ResponseEntity.ok("Déconnexion réussie");
+    }
 
 }

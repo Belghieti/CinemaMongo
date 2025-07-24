@@ -33,6 +33,10 @@ public class JwtService {
         return extractedUsername.equals(username) && expiration.after(new Date());
     }
 
+    public Date extractExpiration(String token) {
+        return getClaims(token).getExpiration();
+    }
+
     private Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
@@ -45,12 +49,10 @@ public class JwtService {
         if (username == null) {
             throw new IllegalArgumentException("Token JWT invalide");
         }
-        // Ici, tu peux charger l'utilisateur depuis la base de données si nécessaire
-        // Par exemple, en utilisant un UserRepository
         return org.springframework.security.core.userdetails.User
                 .withUsername(username)
-                .password("") // Tu peux mettre un mot de passe vide ou le charger depuis la base de données
-                .authorities(Collections.emptyList()) // Tu peux ajouter les rôles de l'utilisateur ici
+                .password("") // à adapter si nécessaire
+                .authorities(Collections.emptyList())
                 .build();
     }
 }
