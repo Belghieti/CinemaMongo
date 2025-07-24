@@ -2,6 +2,7 @@ package com.demo.backend.controller;
 
 import com.demo.backend.model.User;
 import com.demo.backend.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +22,11 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody Map<String, String> body) {
+    public ResponseEntity<?> register(@RequestBody Map<String, String> body , HttpServletRequest request) {
 
         log.info("Registering user with body: {}", body);
-        return  authService.register(body);
+        String clientIp = request.getRemoteAddr();
+        return authService.register(body, clientIp);
     }
 
     @PostMapping("/login")

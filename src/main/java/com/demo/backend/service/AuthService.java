@@ -18,6 +18,8 @@ import java.util.Optional;
 @Service
 public class AuthService {
     // Anti-spam cache: email -> timestamp de dernière tentative
+    // Anti-spam par IP : IP -> dernière tentative
+    private static final ConcurrentHashMap<String, Instant> ipAttempts = new ConcurrentHashMap<>();
     private static final ConcurrentHashMap<String, Instant> registrationAttempts = new ConcurrentHashMap<>();
     private static final long RATE_LIMIT_SECONDS = 60; // 60 secondes entre deux tentatives avec le même email
 
@@ -30,11 +32,15 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<?> register(Map<String, String> body) {
+    public ResponseEntity<?> register(Map<String, String> body , String clientIp) {
         String username = body.get("username");
         String email = body.get("email");
         String password = body.get("password");
-
+        // Blocage par IP
+        Instant lastIpAttempt = ipAttempts.get(clientIp);
+        if (lastIpAttempt != null && Instant.now().minusSeconds(RATE_LIMIT_SECONDS).isBefore(lastIpAttempt)) {
+            return ResponseEntity.status(429).body("Too many requests from your IP. Please wait.");
+        }
         // 🔐 Anti-spam check
         Instant lastAttempt = registrationAttempts.get(email);
         if (lastAttempt != null && Instant.now().minusSeconds(RATE_LIMIT_SECONDS).isBefore(lastAttempt)) {
