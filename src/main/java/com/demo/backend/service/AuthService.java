@@ -1,4 +1,6 @@
 package com.demo.backend.service;
+import java.time.Instant;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 import com.demo.backend.model.User;
@@ -15,6 +17,9 @@ import java.util.Optional;
 
 @Service
 public class AuthService {
+    // Anti-spam cache: email -> timestamp de dernière tentative
+    private static final ConcurrentHashMap<String, Instant> registrationAttempts = new ConcurrentHashMap<>();
+    private static final long RATE_LIMIT_SECONDS = 60; // 60 secondes entre deux tentatives avec le même email
 
     @Autowired
     private UserRepository userRepo;
@@ -29,6 +34,15 @@ public class AuthService {
         String username = body.get("username");
         String email = body.get("email");
         String password = body.get("password");
+
+        // 🔐 Anti-spam check
+        Instant lastAttempt = registrationAttempts.get(email);
+        if (lastAttempt != null && Instant.now().minusSeconds(RATE_LIMIT_SECONDS).isBefore(lastAttempt)) {
+            return ResponseEntity.status(429).body("Too many attempts. Please wait before trying again.");
+        }
+
+        // Enregistrer l'heure de la tentative
+        registrationAttempts.put(email, Instant.now());
 
         if (userRepo.findByUsername(username).isPresent()) {
             return ResponseEntity.badRequest().body("Username already exists");
