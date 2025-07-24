@@ -1,5 +1,6 @@
 package com.demo.backend.controller;
 
+import com.demo.backend.DTOs.UserDTO;
 import com.demo.backend.model.User;
 import com.demo.backend.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,4 +48,11 @@ public class AuthController {
     public List<User> getAllUser() {
         return  authService.getAlluser();
     }*/
+    @GetMapping("/getBoxUsers/{boxId}")
+    public ResponseEntity<List<UserDTO>> getBoxUsers(@PathVariable String boxId) {
+        List<UserDTO> users = authService.getUsersByBox(boxId);
+        return ResponseEntity.ok(users);
+    }
+
+
 }

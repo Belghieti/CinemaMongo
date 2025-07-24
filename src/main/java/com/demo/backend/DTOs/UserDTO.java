@@ -7,7 +7,7 @@ public class UserDTO {
     private String username;
     private String email;
 
-    public UserDTO() {}
+    public UserDTO(String id, String username) {}
 
     public UserDTO(User user) {
         this.id = user.getId();

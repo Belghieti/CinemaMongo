@@ -3,7 +3,10 @@ import java.time.Instant;
 import java.util.concurrent.ConcurrentHashMap;
 
 
+import com.demo.backend.DTOs.UserDTO;
+import com.demo.backend.model.Box;
 import com.demo.backend.model.User;
+import com.demo.backend.repository.BoxRepository;
 import com.demo.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +14,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthService {
@@ -30,9 +35,13 @@ public class AuthService {
 
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private BoxRepository boxRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRepository userRepository;
 
     public ResponseEntity<?> register(Map<String, String> body , String clientIp) {
         String username = body.get("username");
@@ -106,4 +115,23 @@ public class AuthService {
    /* public List<User> getAlluser(){
         return userRepo.findAll();
     }*/
+
+    public List<UserDTO> getUsersByBox(String boxId) {
+        Box box = boxRepository.findById(boxId)
+                .orElseThrow(() -> new RuntimeException("Box not found"));
+
+        List<String> participantIds = box.getParticipantIds();
+
+        // On récupère les utilisateurs à partir de leurs IDs
+        List<User> users = userRepository.findAllById(participantIds);
+
+        // On renvoie une version sécurisée
+        return users.stream()
+                .map(user -> new UserDTO(user.getId(), user.getUsername())) // Pas d’email !
+                .collect(Collectors.toList());
+    }
+
+
+
 }
+
