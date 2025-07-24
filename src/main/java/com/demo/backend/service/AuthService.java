@@ -103,7 +103,7 @@ public class AuthService {
         User user = userRepo.findByUsername(username).orElseThrow();
         return ResponseEntity.ok(Map.of("email", user.getEmail()));
     }
-    public List<User> getAlluser(){
+   /* public List<User> getAlluser(){
         return userRepo.findAll();
-    }
+    }*/
 }

@@ -43,8 +43,8 @@ public class AuthController {
     public ResponseEntity<?> getUserEmail(Authentication auth) {
         return authService.getUserEmail(auth);
     }
-    @GetMapping("/getAllUsers")
+    /*@GetMapping("/getAllUsers")
     public List<User> getAllUser() {
         return  authService.getAlluser();
-    }
+    }*/
 }
