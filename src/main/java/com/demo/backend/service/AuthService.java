@@ -24,6 +24,8 @@ public class AuthService {
     private static final long RATE_LIMIT_SECONDS = 60; // 60 secondes entre deux tentatives avec le même email
 
     @Autowired
+    private CaptchaService captchaService;
+    @Autowired
     private UserRepository userRepo;
 
     @Autowired
@@ -36,6 +38,11 @@ public class AuthService {
         String username = body.get("username");
         String email = body.get("email");
         String password = body.get("password");
+        String captcha = body.get("captcha");
+        // Vérification reCAPTCHA
+        if (captcha == null || !captchaService.verifyCaptcha(captcha)) {
+            return ResponseEntity.status(400).body("Échec vérification reCAPTCHA");
+        }
         // Blocage par IP
         Instant lastIpAttempt = ipAttempts.get(clientIp);
         if (lastIpAttempt != null && Instant.now().minusSeconds(RATE_LIMIT_SECONDS).isBefore(lastIpAttempt)) {
