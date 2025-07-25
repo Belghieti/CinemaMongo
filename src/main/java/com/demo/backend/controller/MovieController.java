@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@CrossOrigin(origins = "https://cinema-front-mngo.vercel.app/") // Remplacez par l'adresse de votre frontend
 @RestController
 @RequestMapping("/api/movies")
 @RequiredArgsConstructor
@@ -22,6 +23,9 @@ public class MovieController {
     @PostMapping
     public Movie addMovie(@RequestBody Movie movie, Authentication authentication) {
         String username = authentication.getName();
+        System.out.println("Authentication: " + authentication);
+
+
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
         movie.setAddedById(user.getId());
