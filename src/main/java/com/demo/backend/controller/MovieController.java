@@ -11,7 +11,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin(origins = "http://192.168.1.122:3000") // Remplacez par l'adresse de votre frontend
 @RestController
 @RequestMapping("/api/movies")
 @RequiredArgsConstructor
