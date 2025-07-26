@@ -5,8 +5,11 @@ import com.demo.backend.model.InvitationMessage;
 import com.demo.backend.model.VideoSyncMessage;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+
+import java.util.Map;
 
 @Controller
 public class WebSocketController {
@@ -39,6 +42,17 @@ public class WebSocketController {
     ) {
         System.out.println("📨 Nouvelle invitation dans box " + boxId + " pour " + message.getInvitedUsername());
         return message;
+    }
+    @MessageMapping("/box/{boxId}/video-call")
+    @SendTo("/topic/box/{boxId}/video-call")
+    public Map<String, Object> handleVideoCall(@Payload Map<String, Object> signal) {
+        return signal;
+    }
+
+    @MessageMapping("/box/{boxId}/call-users")
+    @SendTo("/topic/box/{boxId}/call-users")
+    public Map<String, Object> handleCallUsers(@Payload Map<String, Object> userInfo) {
+        return userInfo;
     }
 
 }
