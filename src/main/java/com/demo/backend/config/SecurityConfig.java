@@ -59,7 +59,7 @@ public class SecurityConfig {
                                      ));
 
 
-        cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"));
         cfg.setAllowedHeaders(List.of("*"));
         cfg.setAllowCredentials(true);
 
