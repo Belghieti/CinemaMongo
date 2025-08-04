@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/login","/auth/register","https://websocketking.com/").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**","https://websocketking.com/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ws", "/ws/**", "/ws-sockjs", "/ws-sockjs/**","https://websocketking.com/").permitAll()
+                        .requestMatchers(HttpMethod.PATCH,"/api/boxes/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter,
