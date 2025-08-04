@@ -44,4 +44,5 @@ public class MovieController {
     public Movie getMovie(@PathVariable String id) {
         return movieService.getMovieById(id);
     }
+
 }

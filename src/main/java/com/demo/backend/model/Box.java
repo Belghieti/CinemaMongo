@@ -19,6 +19,7 @@ public class Box {
     private String name;     // Nom de la room
     private boolean active;  // Est-ce que la session est en cours ?
 
+    private String videoUrl; // URL de la vidéo en cours de lecture
     private String hostId;   // id du user host
     private String movieId;  // id du film
 

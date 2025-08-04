@@ -80,5 +80,20 @@ public class BoxController {
         return ResponseEntity.ok(response);
     }
 
+    @PatchMapping("/{boxId}/video-url")
+    public ResponseEntity<?> updateVideoUrl(
+            @PathVariable String boxId,
+            @RequestParam String value
+    ) {
+        Optional<Box> optionalBox = boxRepository.findById(boxId);
+        if (optionalBox.isEmpty()) {
+            return ResponseEntity.status(404).body("Box non trouvée");
+        }
+        Box box = optionalBox.get();
+        box.setVideoUrl(value);        // ✅ tu dois avoir un champ videoUrl dans ton entité Box
+        boxRepository.save(box);
+        return ResponseEntity.ok("URL mise à jour");
+    }
+
 
 }
